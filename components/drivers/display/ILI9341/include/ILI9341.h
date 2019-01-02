@@ -18,11 +18,11 @@
 #define ILI9341_BCKL 27
 #define ILI9341_BCKL_ON 1
 
-#define LVGL_LCD_SPI VSPI_HOST
+#define LVGL_LCD_SPI HSPI_HOST
 #define SPI_FREQ 26
 
 #define LVGL_TOUCH_CS_GPIO 22
-#define LVGL_TOUCH_IRQ_GPIO 0
+#define LVGL_TOUCH_IRQ_GPIO 34
 #define XPT2046_CLK_FREQ 2
 
 #define LCD_VERTICAL_MAX                320
