@@ -143,15 +143,8 @@ uint32_t lcd_init(lcd_conf_t* lcd_conf, spi_device_handle_t *spi_wr_dev, lcd_dc_
     gpio_pad_select_gpio(lcd_conf->pin_num_dc);
     gpio_set_direction(lcd_conf->pin_num_dc, GPIO_MODE_OUTPUT);
 
-    //Reset the display
-    if (lcd_conf->pin_num_rst < GPIO_NUM_MAX) {
-        gpio_pad_select_gpio(lcd_conf->pin_num_rst);
-        gpio_set_direction(lcd_conf->pin_num_rst, GPIO_MODE_OUTPUT);
-        gpio_set_level(lcd_conf->pin_num_rst, (lcd_conf->rst_active_level) & 0x1);
-        vTaskDelay(100 / portTICK_RATE_MS);
-        gpio_set_level(lcd_conf->pin_num_rst, (~(lcd_conf->rst_active_level)) & 0x1);
-        vTaskDelay(100 / portTICK_RATE_MS);
-    }
+    gpio_pad_select_gpio(lcd_conf->pin_num_cs);
+    gpio_set_direction(lcd_conf->pin_num_cs, GPIO_MODE_OUTPUT);
 
     if (lcd_conf->init_spi_bus) {
         //Initialize SPI Bus for LCD

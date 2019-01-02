@@ -40,16 +40,8 @@
 /**********************
  *      MACROS
  **********************/
-#if CONFIG_LVGL_LCD_DRIVER_FRAMEBUFFER_MODE
-#define TOUCH_CAL_VAL_NAMESPACE "FbLvglParam"
-#define TOUCH_CAL_VAL_KEY "FbTouchCalVal"
-#elif CONFIG_LVGL_LCD_DRIVER_API_MODE
-#define TOUCH_CAL_VAL_NAMESPACE "APILvglParam"
-#define TOUCH_CAL_VAL_KEY "APITouchCalVal"
-#else
 #define TOUCH_CAL_VAL_NAMESPACE "DefLvglParam"
 #define TOUCH_CAL_VAL_KEY "DefTouchCalVal"
-#endif
 
 #define CALIBRATION_POLL_PERIOD         20      // milliseconds
 #define CALIBRATION_MINPRESS_PERIOD     300     // milliseconds

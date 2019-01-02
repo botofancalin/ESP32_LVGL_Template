@@ -11,15 +11,21 @@
 #include "sdkconfig.h"
 
 /*----------------
- * Dynamic memory
+ * General Settings
  *----------------*/
 #define CONFIG_LVGL_DRIVER_SCREEN_HEIGHT	320
 #define CONFIG_LVGL_DRIVER_SCREEN_WIDTH		240
 #define CONFIG_LVGL_DISP_ROTATE_90
+#define LVGL_LCD_DRIVER_FRAMEBUFFER_MODE
+#define DISPLAY_DOUBLE_BUFFER				1
+
+/*----------------
+ * Dynamic memory
+ *----------------*/
 
 /* Memory size which will be used by the library
  * to store the graphical objects and other data */
-#define LV_MEM_CUSTOM      1                /*1: use custom malloc/free, 0: use the built-in lv_mem_alloc/lv_mem_free*/
+#define LV_MEM_CUSTOM      0                /*1: use custom malloc/free, 0: use the built-in lv_mem_alloc/lv_mem_free*/
 #if LV_MEM_CUSTOM == 0
 #define LV_MEM_SIZE    (64U * 1024U)        /*Size memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
 #define LV_MEM_ATTR                         /*Complier prefix for big array declaration*/
@@ -49,19 +55,26 @@
  * Required for buffered drawing, opacity and anti-aliasing
  * VDB makes the double buffering, you don't need to deal with it!
  * Typical size: ~1/10 screen */
+#if defined(LVGL_LCD_DRIVER_FRAMEBUFFER_MODE)
 #define LV_VDB_SIZE         (LV_VER_RES * LV_HOR_RES / 10)  /*Size of VDB in pixel count (1/10 screen size is good for first)*/
+#elif defined(LVGL_LCD_DRIVER_API_MODE)
+#define LV_VDB_SIZE         0  /*Size of VDB in pixel count (1/10 screen size is good for first)*/
+#endif
 
 #define LV_VDB_PX_BPP       LV_COLOR_SIZE     /*Bit-per-pixel of VDB. Useful for monochrome or non-standard color format displays. (Special formats are handles with `disp_drv->vdb_wr`)*/
 #define LV_VDB_ADR          0  /*Place VDB to a specific address (e.g. in external RAM) (0: allocate automatically into RAM)*/
 
 /* Use two Virtual Display buffers (VDB) parallelize rendering and flushing (optional)
  * The flushing should use DMA to write the frame buffer in the background*/
-#define LV_VDB_DOUBLE       1       /*1: Enable the use of 2 VDBs*/
+#define LV_VDB_DOUBLE       DISPLAY_DOUBLE_BUFFER       /*1: Enable the use of 2 VDBs*/
 #define LV_VDB2_ADR         0                                             /*Place VDB2 to a specific address (e.g. in external RAM) (0: allocate automatically into RAM)*/
 
 /* Enable anti-aliasing (lines, and radiuses will be smoothed) */
+#if defined(LVGL_LCD_DRIVER_FRAMEBUFFER_MODE)
 #define LV_ANTIALIAS        1       /*1: Enable anti-aliasing*/
-
+#elif defined(LVGL_LCD_DRIVER_API_MODE)
+#define LV_ANTIALIAS        0       /*1: Enable anti-aliasing*/
+#endif
 
 /*Screen refresh settings*/
 #define LV_REFR_PERIOD      50									      /*Screen refresh period in milliseconds*/

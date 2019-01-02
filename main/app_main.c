@@ -69,7 +69,7 @@
 #define MAX_PLAY_FILE_NUM 20
 
 #define TAG "mp3_example"
-#define USE_ADF_TO_PLAY CONFIG_USE_ADF_PLAY
+#define USE_ADF_TO_PLAY 0
 
 #if USE_ADF_TO_PLAY
 #include "audio_element.h"
