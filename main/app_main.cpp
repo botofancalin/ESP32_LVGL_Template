@@ -23,6 +23,7 @@
 #include "freertos/queue.h"
 #include "freertos/event_groups.h"
 #include "esp_freertos_hooks.h"
+#include "esp_system.h"
 
 /* lvgl includes */
 #include "iot_lvgl.h"

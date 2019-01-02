@@ -35,7 +35,6 @@
                 "${IDF_PATH}/components/wpa_supplicant/port/include",
                 "${IDF_PATH}/components/wpa_supplicant/include",
                 "${IDF_PATH}/components/wifi_provisioning/include",
-                "${IDF_PATH}/components/wear_levelling/private_include",
                 "${IDF_PATH}/components/wear_levelling/include",
                 "${IDF_PATH}/components/ulp/include",
                 "${IDF_PATH}/components/tcp_transport/include",
@@ -74,7 +73,6 @@
                 "${IDF_PATH}/components/esp_https_ota/include",
                 "${IDF_PATH}/components/esp_http_client/lib/include",
                 "${IDF_PATH}/components/esp_http_client/include",
-                "${IDF_PATH}/components/esp_event/private_include",
                 "${IDF_PATH}/components/esp_event/include",
                 "${IDF_PATH}/components/esp_adc_cal/include",
                 "${IDF_PATH}/components/driver/include",
@@ -124,7 +122,6 @@
                 "${IDF_PATH}/components/tcpip_adapter/include",
                 "${IDF_PATH}/components/spi_flash/include",
                 "${IDF_PATH}/components/pthread/include",
-                "${IDF_PATH}/components/mdns/private_include",
                 "${IDF_PATH}/components/idf_test/include",
                 ""
             ],
@@ -164,7 +161,6 @@
                 "${IDF_PATH}/components/wpa_supplicant/port/include",
                 "${IDF_PATH}/components/wpa_supplicant/include",
                 "${IDF_PATH}/components/wifi_provisioning/include",
-                "${IDF_PATH}/components/wear_levelling/private_include",
                 "${IDF_PATH}/components/wear_levelling/include",
                 "${IDF_PATH}/components/ulp/include",
                 "${IDF_PATH}/components/tcp_transport/include",
@@ -203,7 +199,6 @@
                 "${IDF_PATH}/components/esp_https_ota/include",
                 "${IDF_PATH}/components/esp_http_client/lib/include",
                 "${IDF_PATH}/components/esp_http_client/include",
-                "${IDF_PATH}/components/esp_event/private_include",
                 "${IDF_PATH}/components/esp_event/include",
                 "${IDF_PATH}/components/esp_adc_cal/include",
                 "${IDF_PATH}/components/driver/include",
@@ -253,7 +248,6 @@
                 "${IDF_PATH}/components/tcpip_adapter/include",
                 "${IDF_PATH}/components/spi_flash/include",
                 "${IDF_PATH}/components/pthread/include",
-                "${IDF_PATH}/components/mdns/private_include",
                 "${IDF_PATH}/components/idf_test/include",
                 ""
                 ]
