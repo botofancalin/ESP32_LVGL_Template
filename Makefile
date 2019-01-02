@@ -3,7 +3,7 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := lvgl_example
+PROJECT_NAME := lvgl_template
 
 # Add new components (source folders)
 # Must be before include $(IDF_PATH)/make/project.mk

@@ -1,0 +1,22 @@
+// AUTOMATICALLY GENERATED FILE. PLEASE DO NOT MODIFY IT MANUALLY
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "gdb",
+            "request": "attach",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/build/lvgl_template.elf",
+            "target": ":3333",
+            "remote": true,
+            "gdbpath": "C:/Program Files/Espressif/ESP-IDF Tools/tools/bin/xtensa-esp32-elf-gdb.exe",
+            "autorun": [
+                "mon reset halt",
+                "flushregs",
+                "break app_main"
+            ],
+        }
+    ]
+}
