@@ -3,3 +3,5 @@
 #
 # (Uses default behaviour of compiling all source files in directory, adding 'include' to include path.)
 
+CSRCS += demo.c
+CSRCS += img_bubble_pattern.c

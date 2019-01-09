@@ -19,7 +19,7 @@
 #define ILI9341_BCKL_ON 1
 
 #define LVGL_LCD_SPI HSPI_HOST
-#define SPI_FREQ 26
+#define SPI_FREQ 40
 
 #define LVGL_TOUCH_CS_GPIO 22
 #define LVGL_TOUCH_IRQ_GPIO 34
