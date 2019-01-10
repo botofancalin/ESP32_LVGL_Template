@@ -46,21 +46,20 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "freertos/task.h"
 
 /*Rotation Defines*/
-#define MADCTL_MY  0x80
-#define MADCTL_MX  0x40
-#define MADCTL_MV  0x20
-#define MADCTL_ML  0x10
+#define MADCTL_MY 0x80
+#define MADCTL_MX 0x40
+#define MADCTL_MV 0x20
+#define MADCTL_ML 0x10
 #define MADCTL_RGB 0x00
 #define MADCTL_BGR 0x08
-#define MADCTL_MH  0x04
+#define MADCTL_MH 0x04
 
+#define SWAPBYTES(i) ((i >> 8) | (i << 8))
 
-#define SWAPBYTES(i) ((i>>8) | (i<<8))
-
-CEspLcd::CEspLcd(lcd_conf_t* lcd_conf, int height, int width, bool dma_en, int dma_word_size, int dma_chan)
+CEspLcd::CEspLcd(lcd_conf_t *lcd_conf, int height, int width, bool dma_en, int dma_word_size, int dma_chan)
 {
     m_height = height;
-    m_width  = width;
+    m_width = width;
     tabcolor = 0;
     dma_mode = dma_en;
     dma_buf_size = dma_word_size;
@@ -87,10 +86,10 @@ void CEspLcd::releaseBus()
 
 void CEspLcd::setSpiBus(lcd_conf_t *lcd_conf)
 {
-    cmd_io = (gpio_num_t) lcd_conf->pin_num_dc;
+    cmd_io = (gpio_num_t)lcd_conf->pin_num_dc;
     dc.dc_io = cmd_io;
     id.id = lcd_init(lcd_conf, &spi_wr, &dc, m_dma_chan);
-    id.mfg_id = (id.id >> (8 * 1)) & 0xff ;
+    id.mfg_id = (id.id >> (8 * 1)) & 0xff;
     id.lcd_driver_id = (id.id >> (8 * 2)) & 0xff;
     id.lcd_id = (id.id >> (8 * 3)) & 0xff;
 }
@@ -131,7 +130,7 @@ void CEspLcd::transmitData(uint16_t data, int32_t repeats)
     lcd_send_uint16_r(spi_wr, data, repeats, &dc);
     xSemaphoreGiveRecursive(spi_mux);
 }
-void CEspLcd::transmitData(uint8_t* data, int length)
+void CEspLcd::transmitData(uint8_t *data, int length)
 {
     xSemaphoreTakeRecursive(spi_mux, portMAX_DELAY);
     lcd_data(spi_wr, (uint8_t *)data, length, &dc);
@@ -147,7 +146,7 @@ void CEspLcd::transmitCmd(uint8_t cmd)
 void CEspLcd::transmitCmdData(uint8_t cmd, const uint8_t data, uint8_t numDataByte)
 {
     xSemaphoreTakeRecursive(spi_mux, portMAX_DELAY);
-    lcd_cmd(spi_wr, (const uint8_t) cmd, &dc);
+    lcd_cmd(spi_wr, (const uint8_t)cmd, &dc);
     lcd_data(spi_wr, &data, 1, &dc);
     xSemaphoreGiveRecursive(spi_mux);
 }
@@ -162,34 +161,43 @@ uint32_t CEspLcd::getLcdId()
 
 void CEspLcd::drawPixel(int16_t x, int16_t y, uint16_t color)
 {
-    if ((x < 0) || (x >= m_width) || (y < 0) || (y >= m_height)) {
+    if ((x < 0) || (x >= m_width) || (y < 0) || (y >= m_height))
+    {
         return;
     }
     xSemaphoreTakeRecursive(spi_mux, portMAX_DELAY);
     setAddrWindow(x, y, x + 1, y + 1);
-    transmitData((uint16_t) SWAPBYTES(color));
+    transmitData((uint16_t)SWAPBYTES(color));
     xSemaphoreGiveRecursive(spi_mux);
 }
 
-void CEspLcd::_fastSendBuf(const uint16_t* buf, int point_num, bool swap)
+void CEspLcd::_fastSendBuf(const uint16_t *buf, int point_num, bool swap)
 {
-    if ((point_num * sizeof(uint16_t)) <= (16 * sizeof(uint32_t))) {
-        transmitData((uint8_t*) buf, sizeof(uint16_t) * point_num);
-    } else {
+    if ((point_num * sizeof(uint16_t)) <= (16 * sizeof(uint32_t)))
+    {
+        transmitData((uint8_t *)buf, sizeof(uint16_t) * point_num);
+    }
+    else
+    {
         int gap_point = dma_buf_size;
-        uint16_t* data_buf = (uint16_t*) malloc(gap_point * sizeof(uint16_t));
+        uint16_t *data_buf = (uint16_t *)malloc(gap_point * sizeof(uint16_t));
         int offset = 0;
-        while (point_num > 0) {
+        while (point_num > 0)
+        {
             int trans_points = point_num > gap_point ? gap_point : point_num;
 
-            if (swap) {
-                for (int i = 0; i < trans_points; i++) {
+            if (swap)
+            {
+                for (int i = 0; i < trans_points; i++)
+                {
                     data_buf[i] = SWAPBYTES(buf[i + offset]);
                 }
-            } else {
-                memcpy((uint8_t*) data_buf, (uint8_t*) (buf + offset), trans_points * sizeof(uint16_t));
             }
-            transmitData((uint8_t*) (data_buf), trans_points * sizeof(uint16_t));
+            else
+            {
+                memcpy((uint8_t *)data_buf, (uint8_t *)(buf + offset), trans_points * sizeof(uint16_t));
+            }
+            transmitData((uint8_t *)(data_buf), trans_points * sizeof(uint16_t));
             offset += trans_points;
             point_num -= trans_points;
         }
@@ -204,14 +212,16 @@ void CEspLcd::_fastSendRep(uint16_t val, int rep_num)
     int gap_point = dma_buf_size;
     gap_point = (gap_point > point_num ? point_num : gap_point);
 
-    uint16_t* data_buf = (uint16_t*) malloc(gap_point * sizeof(uint16_t));
+    uint16_t *data_buf = (uint16_t *)malloc(gap_point * sizeof(uint16_t));
     int offset = 0;
-    while (point_num > 0) {
-        for (int i = 0; i < gap_point; i++) {
+    while (point_num > 0)
+    {
+        for (int i = 0; i < gap_point; i++)
+        {
             data_buf[i] = val;
         }
         int trans_points = point_num > gap_point ? gap_point : point_num;
-        transmitData((uint8_t*) (data_buf), sizeof(uint16_t) * trans_points);
+        transmitData((uint8_t *)(data_buf), sizeof(uint16_t) * trans_points);
         offset += trans_points;
         point_num -= trans_points;
     }
@@ -223,10 +233,14 @@ void CEspLcd::drawBitmap(int16_t x, int16_t y, const uint16_t *bitmap, int16_t w
 {
     xSemaphoreTakeRecursive(spi_mux, portMAX_DELAY);
     setAddrWindow(x, y, x + w - 1, y + h - 1);
-    if (dma_mode) {
+    if (dma_mode)
+    {
         _fastSendBuf(bitmap, w * h);
-    } else {
-        for (int i = 0; i < w * h; i++) {
+    }
+    else
+    {
+        for (int i = 0; i < w * h; i++)
+        {
             transmitData(SWAPBYTES(bitmap[i]), 1);
         }
     }
@@ -241,20 +255,26 @@ void CEspLcd::fillScreen(uint16_t color)
 void CEspLcd::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
     // rudimentary clipping (drawChar w/big text requires this)
-    if ((x >= m_width) || (y >= m_height)) {
+    if ((x >= m_width) || (y >= m_height))
+    {
         return;
     }
-    if ((x + w - 1) >= m_width) {
+    if ((x + w - 1) >= m_width)
+    {
         w = m_width - x;
     }
-    if ((y + h - 1) >= m_height) {
+    if ((y + h - 1) >= m_height)
+    {
         h = m_height - y;
     }
     xSemaphoreTakeRecursive(spi_mux, portMAX_DELAY);
     setAddrWindow(x, y, x + w - 1, y + h - 1);
-    if (dma_mode) {
+    if (dma_mode)
+    {
         _fastSendRep(SWAPBYTES(color), h * w);
-    } else {
+    }
+    else
+    {
         transmitData(SWAPBYTES(color), h * w);
     }
     xSemaphoreGiveRecursive(spi_mux);
@@ -264,4 +284,3 @@ uint16_t CEspLcd::color565(uint8_t r, uint8_t g, uint8_t b)
 {
     return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
 }
-

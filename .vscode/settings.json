@@ -1,2 +1,4 @@
 {
+    "files.autoSave": "afterDelay",
+    "python.linting.pylintEnabled": true
 }

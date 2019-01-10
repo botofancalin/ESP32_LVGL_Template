@@ -15,8 +15,8 @@
  *----------------*/
 #define CONFIG_LVGL_DRIVER_SCREEN_HEIGHT	320
 #define CONFIG_LVGL_DRIVER_SCREEN_WIDTH		240
-#define CONFIG_LVGL_DISP_ROTATE_90
-#define LVGL_LCD_DRIVER_FRAMEBUFFER_MODE
+#define CONFIG_LVGL_DISP_ROTATE_90			1
+#define LVGL_LCD_DRIVER_FRAMEBUFFER_MODE	1
 #define DISPLAY_DOUBLE_BUFFER				1
 
 /*----------------
@@ -27,7 +27,7 @@
  * to store the graphical objects and other data */
 #define LV_MEM_CUSTOM      1                /*1: use custom malloc/free, 0: use the built-in lv_mem_alloc/lv_mem_free*/
 #if LV_MEM_CUSTOM == 0
-#define LV_MEM_SIZE    (64U * 1024U)        /*Size memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
+#define LV_MEM_SIZE    (32U * 1024U)        /*Size memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
 #define LV_MEM_ATTR                         /*Complier prefix for big array declaration*/
 #define LV_MEM_AUTO_DEFRAG  1               /*Automatically defrag on free*/
 #else       /*LV_MEM_CUSTOM*/
@@ -106,8 +106,8 @@
 #define USE_LV_ANIMATION        1               /*1: Enable all animations*/
 #define USE_LV_SHADOW           1               /*1: Enable shadows*/
 #define USE_LV_GROUP            1               /*1: Enable object groups (for keyboards)*/
-#define USE_LV_GPU              1               /*1: Enable GPU interface*/
-#define USE_LV_REAL_DRAW        1               /*1: Enable function which draw directly to the frame buffer instead of VDB (required if LV_VDB_SIZE = 0)*/
+#define USE_LV_GPU              0               /*1: Enable GPU interface*/
+#define USE_LV_REAL_DRAW        0               /*1: Enable function which draw directly to the frame buffer instead of VDB (required if LV_VDB_SIZE = 0)*/
 #define USE_LV_FILESYSTEM       1               /*1: Enable file system (required by images*/
 
 /*Compiler settings*/

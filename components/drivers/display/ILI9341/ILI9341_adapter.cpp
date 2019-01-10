@@ -35,7 +35,7 @@
 
 class CEspLcdAdapter : public CEspLcd
 {
-public:
+  public:
     const uint16_t *pFrameBuffer = NULL;
     CEspLcdAdapter(lcd_conf_t *lcd_conf, int height = LCD_TFTHEIGHT, int width = LCD_TFTWIDTH, bool dma_en = true, int dma_word_size = 1024, int dma_chan = 1) : CEspLcd(lcd_conf, height, width, dma_en, dma_word_size, dma_chan)
     {
@@ -141,7 +141,8 @@ lv_disp_drv_t lvgl_lcd_display_init()
         .init_spi_bus = true,
     };
 
-    if (lcd_obj == NULL) {
+    if (lcd_obj == NULL)
+    {
         lcd_obj = new CEspLcdAdapter(&lcd_pins, LV_VER_RES, LV_HOR_RES);
     }
 
@@ -167,9 +168,12 @@ lv_disp_drv_t lvgl_lcd_display_init()
 #endif
 
     /* Set up the functions to access to your display */
-    if (LV_VDB_SIZE != 0) {
+    if (LV_VDB_SIZE != 0)
+    {
         disp_drv.disp_flush = ex_disp_flush; /*Used in buffered mode (LV_VDB_SIZE != 0  in lv_conf.h)*/
-    } else if (LV_VDB_SIZE == 0) {
+    }
+    else if (LV_VDB_SIZE == 0)
+    {
         disp_drv.disp_fill = ex_disp_fill; /*Used in unbuffered mode (LV_VDB_SIZE == 0  in lv_conf.h)*/
         disp_drv.disp_map = ex_disp_map;   /*Used in unbuffered mode (LV_VDB_SIZE == 0  in lv_conf.h)*/
     }
