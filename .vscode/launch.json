@@ -1,10 +1,8 @@
-// AUTOMATICALLY GENERATED FILE. PLEASE DO NOT MODIFY IT MANUALLY
-
 {
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug",
+            "name": "Debug Windows",
             "type": "gdb",
             "request": "attach",
             "cwd": "${workspaceRoot}",
@@ -16,7 +14,52 @@
                 "mon reset halt",
                 "flushregs",
                 "break app_main"
+            ]
+        },
+        {
+            "name": "Debug Linux",
+            "type": "gdb",
+            "request": "attach",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/build/lvgl_template.elf",
+            "target": ":3333",
+            "remote": true,
+            "gdbpath": "/home/calin/esp/xtensa-esp32-elf/bin/xtensa-esp32-elf-gdb",
+            "autorun": [
+                "mon reset halt",
+                "flushregs",
+                "break app_main"
+            ]
+        },
+        {
+            "name": "OpenOCD Debug linux",
+            "type": "cppdbg",
+            "request": "launch",
+            "miDebuggerPath": "/home/calin/esp/xtensa-esp32-elf/bin/xtensa-esp32-elf-gdb",
+            "program": "${workspaceRoot}/build/lvgl_template.elf",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "text": "file '${workspaceRoot}/build/lvgl_template.elf'"
+                },
+                {
+                    "text": "target remote :3333"
+                },
+                {
+                    "text": "monitor reset init"
+                }
             ],
+            "externalConsole": false,
+            "cwd": "${workspaceRoot}/build/",
+            "logging": {
+                "trace": true,
+                "traceResponse": true,
+                "engineLogging": true
+            }
         }
     ]
 }

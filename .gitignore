@@ -33,4 +33,4 @@
 
 /build
 *.old
-*.DB*
+*.db*

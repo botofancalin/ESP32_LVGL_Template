@@ -1,4 +1,64 @@
 {
     "files.autoSave": "afterDelay",
-    "python.linting.pylintEnabled": true
+    "actionButtons": {
+        "defaultColor": "#ff0034", // Can also use string color names.
+        "commands": [
+            {
+                "name": "StartGdb",
+                "color": "white",
+                "singleInstance": true,
+                "command": "openocd -f interface/ftdi/esp32_devkitj_v1.cfg -f board/esp32-wrover.cfg",
+            },
+            {
+                "name": "Make Menu",
+                "color": "lime",
+                "command": "make menuconfig",
+            },
+            {
+                "name": "Make All",
+                "color": "orange",
+                "command": "make all -j8",
+            },
+            {
+                "name": "Flash",
+                "color": "orange",
+                "command": "make flash -j8",
+            },
+            {
+                "name": "Monitor",
+                "color": "lime",
+                "command": "make monitor -j8",
+            },
+            {
+                "name": "Clean",
+                "color": "orange",
+                "command": "make clean",
+            },
+            {
+                "name": "Py Menu",
+                "color": "lime",
+                "command": "idf.py menuconfig",
+            },
+            {
+                "name": "Py Build",
+                "color": "orange",
+                "command": "idf.py build",
+            },
+            {
+                "name": "Py Flash",
+                "color": "lime",
+                "command": "idf.py flash",
+            },
+            {
+                "name": "Py Monitor",
+                "color": "orange",
+                "command": "idf.py monitor",
+            },
+            {
+                "name": "Py clean",
+                "color": "white",
+                "command": "idf.py fullclean",
+            },
+        ]
+    }
 }
