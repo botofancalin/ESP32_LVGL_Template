@@ -10,6 +10,11 @@
             "target": ":3333",
             "remote": true,
             "gdbpath": "C:/Program Files/Espressif/ESP-IDF Tools/tools/bin/xtensa-esp32-elf-gdb.exe",
+            "setupCommands":[
+                {
+                    "text": "set mem inaccessible-by-default off"
+                }
+            ],
             "autorun": [
                 "mon reset halt",
                 "flushregs",
@@ -35,7 +40,7 @@
             "name": "OpenOCD Debug linux",
             "type": "cppdbg",
             "request": "launch",
-            "miDebuggerPath": "/home/calin/esp/xtensa-esp32-elf/bin/xtensa-esp32-elf-gdb",
+            "miDebuggerPath": "C:/Program Files/Espressif/ESP-IDF Tools/tools/bin/xtensa-esp32-elf-gdb.exe",
             "program": "${workspaceRoot}/build/lvgl_template.elf",
             "setupCommands": [
                 {

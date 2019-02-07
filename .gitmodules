@@ -1,3 +1,0 @@
-[submodule "components/lvgl_gui/lvgl"]
-	path = components/lvgl_gui/lvgl
-	url = https://github.com/littlevgl/lvgl.git
