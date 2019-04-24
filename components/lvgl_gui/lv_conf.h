@@ -100,7 +100,7 @@
  /* Place VDB to a specific address (e.g. in external RAM)
   * 0: allocate automatically into RAM
   * LV_VDB_ADR_INV: to replace it later with `lv_vdb_set_adr()`*/
-#define LV_VDB_ADR          0
+#define LV_VDB_ADR          (0)
 
 /* Use two Virtual Display buffers (VDB) to parallelize rendering and flushing
  * The flushing should use DMA to write the frame buffer in the background */
@@ -157,13 +157,14 @@
 /*Compiler settings*/
 #define LV_ATTRIBUTE_TICK_INC                   /* Define a custom attribute to `lv_tick_inc` function */
 #define LV_ATTRIBUTE_TASK_HANDLER               /* Define a custom attribute to `lv_task_handler` function */
+#define LV_ATTRIBUTE_MEM_ALIGN                  /* With size optimization (-Os) the compiler might not align data to 4 or 8 byte boundary. This alignment will be explicitly applied where needed.*/
 #define LV_COMPILER_VLA_SUPPORTED            1  /* 1: Variable length array is supported*/
 #define LV_COMPILER_NON_CONST_INIT_SUPPORTED 1  /* 1: Initialization with non constant values are supported */
 
 /*HAL settings*/
 #define LV_TICK_CUSTOM     0                        /*1: use a custom tick source (removing the need to manually update the tick with `lv_tick_inc`) */
 #if LV_TICK_CUSTOM == 1
-#define LV_TICK_CUSTOM_INCLUDE  "sonething.h"         /*Header for the sys time function*/
+#define LV_TICK_CUSTOM_INCLUDE  "something.h"         /*Header for the sys time function*/
 #define LV_TICK_CUSTOM_SYS_TIME_EXPR (millis())     /*Expression evaluating to current systime in ms*/
 #endif     /*LV_TICK_CUSTOM*/
 
@@ -402,6 +403,13 @@
 /*************************
  * Non-user section
  *************************/
+
+#if LV_INDEV_DRAG_THROW <= 0
+#warning "LV_INDEV_DRAG_THROW must be greater than 0"
+#undef LV_INDEV_DRAG_THROW
+#define LV_INDEV_DRAG_THROW 1
+#endif
+
 #if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_WARNINGS)    /* Disable warnings for Visual Studio*/
 #  define _CRT_SECURE_NO_WARNINGS
 #endif

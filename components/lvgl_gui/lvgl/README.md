@@ -35,6 +35,7 @@ LittlevGL provides everything you need to create a Graphical User Interface (GUI
 * **OS, External memory and GPU** supported but not required
 * **Single frame buffer** operation even with advances graphical effects
 * **Written in C** for maximal compatibility
+* **Micropython Binding** exposes [LittlevGL API in Micropython](https://blog.littlevgl.com/2019-02-20/micropython-bindings)
 * **Simulator** to develop on PC without embedded hardware
 * **Tutorials, examples, themes** for rapid development
 * **Documentation** and API references online
@@ -62,15 +63,15 @@ The easiest way to get started with LittlevGL is to run it in a simulator on you
 
 Choose a project with your favourite IDE:
 
-|   Eclipse   | CodeBlock  | Visual Studio | PlatformIO | Qt Creator |
-|-------------|----------- |---------------|-----------|------------|
+|   Eclipse   |  CodeBlocks | Visual Studio | PlatformIO | Qt Creator |
+|-------------|-------------|---------------|-----------|------------|
 |  [![Eclipse](https://littlevgl.com/logo/ide/eclipse.jpg)](https://github.com/littlevgl/pc_simulator_sdl_eclipse) | [![CodeBlocks](https://littlevgl.com/logo/ide/codeblocks.jpg)](https://github.com/littlevgl/pc_simulator_win_codeblocks) | [![VisualStudio](https://littlevgl.com/logo/ide/visualstudio.jpg)](https://github.com/littlevgl/visual_studio_2017_sdl_x64)   |   [![PlatformIO](https://littlevgl.com/logo/ide/platformio.jpg)](https://github.com/littlevgl/pc_simulator_sdl_platformio) | [![QtCreator](https://littlevgl.com/logo/ide/qtcreator.jpg)](https://blog.littlevgl.com/2019-01-03/qt-creator) |
 | Cross-platform<br>with SDL | Native Windows | Cross-platform<br>with SDL | Cross-platform<br>with SDL | Cross-platform<br>with SDL |
 
 ### Porting to an embedded hardware
 In the most simple case you need to do these steps:
 1. Copy `lv_conf_templ.h` as `lv_conf.h` next to `lvgl` and set at least `LV_HOR_RES`, `LV_VER_RES` and `LV_COLOR_DEPTH`. 
-2. Call `lv_tick_inc(x)` every `x` milliseconds in a Timer or Task (`x` should be between 1 and 10)
+2. Call `lv_tick_inc(x)` every `x` milliseconds **in a Timer or Task** (`x` should be between 1 and 10). It is required for the internal timing of LittlevGL.
 3. Call `lv_init()`
 4. Register a function which can **copy a pixel array** to an area of the screen:
 ```c
@@ -116,7 +117,7 @@ bool touchpad_read(lv_indev_data_t * data)
     return false; /*Return `false` because we are not buffering and no more data to read*/
 }
 ```
-6. Call `lv_task_handler()` periodically every few milliseconds in the main `while(1)` loop, in Timer interrupt or in an Operation system task.
+6. Call `lv_task_handler()` periodically every few milliseconds in the main `while(1)` loop, in Timer interrupt or in an Operation system task. It will redraw the screen if required, handle input devices etc.
 
 For a detailed description check the [Documentation](https://docs.littlevgl.com/#Porting) or the [Porting tutorial](https://github.com/littlevgl/lv_examples/blob/master/lv_tutorial/0_porting/lv_tutorial_porting.c)
  
@@ -177,12 +178,26 @@ lv_btn_set_ink_out_time(btn, 300);
 
 ![Simple button with LittelvGL](https://littlevgl.com/github/btn3.gif)
 
+#### Use LittlevGL from Micropython
+```python
+# Create a Button and a Label
+scr = lv.obj()
+btn = lv.btn(scr)
+btn.align(lv.scr_act(), lv.ALIGN.CENTER, 0, 0)
+label = lv.label(btn)
+label.set_text("Button")
+
+# Load the screen
+lv.scr_load(scr)
+```
+
 Check out the [Documentation](https://docs.littlevgl.com/) for more!
 
 ### Contributing
-To ask questions and discuss topics we use [GitHub's Issue tracker](https://github.com/littlevgl/lvgl/issues). 
-You contribute in several ways:
-- **Answer other's question** click the Watch button on the top to get notified about the issues
+To ask questions please use the [Forum](https://forum.littlevgl.com).
+FOr development related things (bug reports, feature suggestions) use [GitHub's Issue tracker](https://github.com/littlevgl/lvgl/issues). 
+You can contribute in several ways:
+- **Answer other's question** in the Forum
 - **Report and/or fix bugs** using the issue tracker and in Pull-request
 - **Suggest and/or implement new features** using the issue tracker and in Pull-request
 - **Improve and/or translate the documentation** learn more [here](https://github.com/littlevgl/docs)
