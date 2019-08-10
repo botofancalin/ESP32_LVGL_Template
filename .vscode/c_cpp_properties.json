@@ -260,7 +260,8 @@
             "intelliSenseMode": "clang-x64",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "compilerPath": "c:/Program Files/Espressif/ESP-IDF Tools/tools/bin/xtensa-esp32-elf-gcc.exe"
+            "compilerPath": "c:/Program Files/Espressif/ESP-IDF Tools/tools/bin/xtensa-esp32-elf-gcc.exe",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
         }
     ],
     "version": 4
