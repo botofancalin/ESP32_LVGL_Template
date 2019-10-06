@@ -1,3 +1,5 @@
-set(COMPONENT_SRCS ./app_main.c ./demo.c ./img_bubble_pattern.c)
+file(GLOB template_sources ./*.cpp ./*.c)
+set(COMPONENT_SRCS ${template_sources})
+set(COMPONENT_ADD_INCLUDEDIRS ".")
 
 register_component()

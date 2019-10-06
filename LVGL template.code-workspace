@@ -4,6 +4,18 @@
 			"path": "."
 		}
 	],
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"twxs.cmake",
+			"eamodio.gitlens",
+			"mhutchie.git-graph",
+			"donjayamanne.githistory",
+			"seunlanlege.action-buttons",
+			"vscode-icons-team.vscode-icons",
+			"webfreak.debug"
+		]
+	},
 	"settings": {
 		"actionButtons": {
 			"defaultColor": "#ff0034",
@@ -11,7 +23,7 @@
 				{
 					"name": "Py Menu",
 					"color": "lime",
-					"command": "idf.py menuconfig"
+					"command": "powershell idf.py menuconfig"
 				},
 				{
 					"name": "Py Build",
@@ -35,6 +47,7 @@
 				}
 			]
 		},
-		"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe"
+		"terminal.integrated.shell.windows": "C:/Windows/System32/cmd.exe",
+		"workbench.iconTheme": "vscode-icons"
 	}
 }

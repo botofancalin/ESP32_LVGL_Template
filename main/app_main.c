@@ -47,7 +47,7 @@ static void user_task(void *pvParameter)
     demo_create();
     while (1)
     {
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+        vTaskDelay(5 / portTICK_PERIOD_MS);
     }
 }
 
